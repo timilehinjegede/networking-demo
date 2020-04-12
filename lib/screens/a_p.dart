@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:networkingdemo/models/album.dart';
 
-class AlbumScreen extends StatefulWidget {
+class APScreen extends StatefulWidget {
   @override
-  _AlbumScreenState createState() => _AlbumScreenState();
+  _APScreenState createState() => _APScreenState();
 }
 
-class _AlbumScreenState extends State<AlbumScreen> {
+class _APScreenState extends State<APScreen> {
   Future<Album> futureAlbum;
   TextEditingController _controller = TextEditingController();
   @override
@@ -30,34 +30,18 @@ class _AlbumScreenState extends State<AlbumScreen> {
             builder: (context, snapshot) {
               if(snapshot.connectionState == ConnectionState.done){
               if (snapshot.hasData) {
-                return Column(children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: _controller,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text('${snapshot.data?.title ?? 'Deleted'}'),
-                      SizedBox(height: 20,),
-                      FlatButton(
-                        child: Text(
-                            'Delete'
-                        ),
-                        onPressed: (){
-                          setState(() {
-                            futureAlbum = deleteAlbum(snapshot.data.id);
-                          });
-                        },
-                      )
-                    ],
-                  )
-                ]);
+                return ListView.builder(
+                  itemCount: 5,
+                    itemBuilder: (BuildContext context, int index){
+                      return Text(
+                          snapshot.data.title,
+                      );
+                    }
+                );
               }
               }
               else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+                return Center(child: Text('${snapshot.error}'));
               }
               return CircularProgressIndicator();
             },
@@ -70,7 +54,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
 
   Future<Album> fetchAlbums() async {
     final response =
-        await http.get('https://jsonplaceholder.typicode.com/albums/1');
+        await http.get('https://jsonplaceholder.typicode.com/albums');
 
     if (response.statusCode == 200) {
       return Album.fromJson(json.decode(response.body));
@@ -113,3 +97,28 @@ class _AlbumScreenState extends State<AlbumScreen> {
   }
 
 }
+
+//Column(children: <Widget>[
+//Column(
+//children: <Widget>[
+//TextField(
+//controller: _controller,
+//),
+//SizedBox(
+//height: 20,
+//),
+//Text('${snapshot.data?.title ?? 'Deleted'}'),
+//SizedBox(height: 20,),
+//FlatButton(
+//child: Text(
+//'Update'
+//),
+//onPressed: (){
+//setState(() {
+////                            futureAlbum = deleteAlbum(snapshot.data.id);
+//futureAlbum = updateAlbum(_controller.text);
+//});
+//},
+//)
+//],
+//)
