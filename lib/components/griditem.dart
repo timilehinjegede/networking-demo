@@ -16,7 +16,7 @@ class GridItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Colors.blueGrey,
+        color: Colors.blue[500],
       ),
       height: 200,
       child: Column(

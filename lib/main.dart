@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:networkingdemo/screens/a_p.dart';
+import 'package:networkingdemo/screens/album_photo/a_p.dart';
 import 'package:networkingdemo/screens/home.dart';
 import 'package:networkingdemo/screens/p_c.dart';
 import 'package:networkingdemo/screens/u_a.dart';
