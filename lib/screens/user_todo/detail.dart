@@ -52,7 +52,7 @@ class _UserTodoDetailState extends State<UserTodoDetail> {
     Map<String, String> queryParameters = {'userId': '${widget.id}'};
 
     var uri =
-        Uri.https('jsonplaceholder.typicode.com', '/albums', queryParameters);
+        Uri.https('jsonplaceholder.typicode.com', '/todos', queryParameters);
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {
