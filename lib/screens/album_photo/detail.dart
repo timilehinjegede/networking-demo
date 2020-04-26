@@ -26,7 +26,6 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
       body: FutureBuilder<List<Photo>>(
         future: futurePhoto = fetchPhotos(),
         builder: (context, snapshot) {
-          print(widget.id);
           if (snapshot.hasData) {
             return ListView.builder(
               padding: EdgeInsets.zero,
@@ -81,9 +80,9 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((album) => Photo.fromJson(album)).toList();
+      return jsonResponse.map((photo) => Photo.fromJson(photo)).toList();
     } else {
-      throw Exception('failed to load album');
+      throw Exception('failed to load photo');
     }
   }
 }

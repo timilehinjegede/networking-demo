@@ -38,7 +38,6 @@ class _APScreenState extends State<APScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                padding: EdgeInsets.zero,
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
