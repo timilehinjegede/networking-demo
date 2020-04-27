@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/user.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:networkingdemo/screens/user_todo/detail.dart';
 
@@ -18,7 +17,7 @@ class _UTScreenState extends State<UTScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    futureUser = fetchUsers();
+    futureUser = ApiService.fetchUsers();
   }
 
   @override
@@ -149,24 +148,9 @@ class _UTScreenState extends State<UTScreen> {
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           }
-          return SpinKitSquareCircle(
-            color: Colors.blue,
-            size: 50,
-          );
+          return LoadingIndicator();
         },
       ),
     );
-  }
-
-  Future<List<User>> fetchUsers() async {
-    final response =
-    await http.get('https://jsonplaceholder.typicode.com/users');
-
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((user) => User.fromJson(user)).toList();
-    } else {
-      throw Exception('failed to load album');
-    }
   }
 }

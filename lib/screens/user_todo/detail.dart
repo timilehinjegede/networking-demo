@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/todo.dart';
 
 class UserTodoDetail extends StatefulWidget {
@@ -14,7 +16,15 @@ class UserTodoDetail extends StatefulWidget {
 }
 
 class _UserTodoDetailState extends State<UserTodoDetail> {
-  Future<List<Todo>> fetchTodos;
+  Future<List<Todo>> futureTodos;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureTodos = ApiService.fetchTodos(widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +34,7 @@ class _UserTodoDetailState extends State<UserTodoDetail> {
         centerTitle: false,
       ),
       body: FutureBuilder<List<Todo>>(
-          future: fetchTodos = fetchTodo(),
+          future: futureTodos,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -40,26 +50,8 @@ class _UserTodoDetailState extends State<UserTodoDetail> {
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-            return SpinKitSquareCircle(
-              color: Colors.blue,
-              size: 50,
-            );
+            return LoadingIndicator();
           }),
     );
-  }
-
-  Future<List<Todo>> fetchTodo() async {
-    Map<String, String> queryParameters = {'userId': '${widget.id}'};
-
-    var uri =
-        Uri.https('jsonplaceholder.typicode.com', '/todos', queryParameters);
-
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((todo) => Todo.fromJson(todo)).toList();
-    } else {
-      throw Exception('failed to load album');
-    }
   }
 }

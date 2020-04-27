@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/album.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class UserAlbumDetail extends StatefulWidget {
   final int id;
@@ -18,6 +17,13 @@ class _UserAlbumDetailState extends State<UserAlbumDetail> {
   Future<List<Album>> futureAlbum;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureAlbum = ApiService.fetchAlbumsWithId(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +32,7 @@ class _UserAlbumDetailState extends State<UserAlbumDetail> {
       ),
       body: Center(
         child: FutureBuilder<List<Album>>(
-          future: futureAlbum = fetchAlbum(),
+          future: futureAlbum,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -44,25 +50,10 @@ class _UserAlbumDetailState extends State<UserAlbumDetail> {
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-            return SpinKitSquareCircle(color: Colors.blue, size: 50);
+            return LoadingIndicator();
           },
         ),
       ),
     );
-  }
-
-  Future<List<Album>> fetchAlbum() async {
-    Map<String, String> queryParameters = {'userId': '${widget.id}'};
-
-    var uri =
-        Uri.https('jsonplaceholder.typicode.com', '/albums', queryParameters);
-
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((album) => Album.fromJson(album)).toList();
-    } else {
-      throw Exception('failed to load album');
-    }
   }
 }

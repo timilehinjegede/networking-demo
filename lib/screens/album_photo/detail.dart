@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/photo.dart';
-import 'package:http/http.dart' as http;
 
 class AlbumPhotoDetail extends StatefulWidget {
   final int id;
@@ -17,6 +15,13 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
   Future<List<Photo>> futurePhoto;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futurePhoto = ApiService.fetchPhotosWithId(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +29,7 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
         centerTitle: false,
       ),
       body: FutureBuilder<List<Photo>>(
-        future: futurePhoto = fetchPhotos(),
+        future: futurePhoto,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -58,31 +63,10 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return SpinKitSquareCircle(
-            color: Colors.blue,
-            size: 50,
-          );
+          return LoadingIndicator();
           print('Here');
         },
       ),
     );
-  }
-
-  Future<List<Photo>> fetchPhotos() async {
-    Map<String, String> queryParameters = {
-      'albumId': '${widget.id}',
-    };
-
-    var uri =
-        Uri.https('jsonplaceholder.typicode.com', '/photos', queryParameters);
-
-    final response = await http.get(uri);
-
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((photo) => Photo.fromJson(photo)).toList();
-    } else {
-      throw Exception('failed to load photo');
-    }
   }
 }

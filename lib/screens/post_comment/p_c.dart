@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/post.dart';
 import 'package:networkingdemo/screens/post_comment/detail.dart';
 
-class PCScreen extends StatelessWidget {
+class PCScreen extends StatefulWidget {
+  @override
+  _PCScreenState createState() => _PCScreenState();
+}
+
+class _PCScreenState extends State<PCScreen> {
   Future<List<Post>> futurePosts;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futurePosts = ApiService.fetchPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +28,7 @@ class PCScreen extends StatelessWidget {
             ),
             centerTitle: false),
         body: FutureBuilder<List<Post>>(
-            future: futurePosts = fetchPosts(),
+            future: futurePosts,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -37,22 +48,7 @@ class PCScreen extends StatelessWidget {
               } else if (snapshot.hasError) {
                 Text('${snapshot.error}');
               }
-              return SpinKitSquareCircle(
-                color: Colors.blue,
-                size: 50,
-              );
+              return LoadingIndicator();
             }));
-  }
-
-  Future<List<Post>> fetchPosts() async {
-    final response =
-        await http.get('https://jsonplaceholder.typicode.com/posts');
-
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((post) => Post.fromJson(post)).toList();
-    } else {
-      throw Exception('failed to load album');
-    }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/comment.dart';
 
 class PostCommentDetail extends StatefulWidget {
@@ -19,6 +18,13 @@ class _PostCommentDetailState extends State<PostCommentDetail> {
   Future<List<Comment>> futureComment;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureComment = ApiService.fetchCommentsWithId(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +34,7 @@ class _PostCommentDetailState extends State<PostCommentDetail> {
         centerTitle: false,
       ),
       body: FutureBuilder<List<Comment>>(
-        future: futureComment = fetchComments(),
+        future: futureComment,
         builder: (context, snapshot){
           if( snapshot.hasData){
             return ListView.builder(
@@ -56,27 +62,9 @@ class _PostCommentDetailState extends State<PostCommentDetail> {
               '${snapshot.error}'
             );
           }
-          return SpinKitSquareCircle(
-            color: Colors.blue,
-            size: 50,
-          );
+          return LoadingIndicator();
         }
       )
     );
-  }
-
-  Future<List<Comment>> fetchComments() async {
-    Map<String, String> queryParameters = {'postId': '${widget.id}'};
-
-    var uri =
-    Uri.https('jsonplaceholder.typicode.com', '/comments', queryParameters);
-
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((comment) => Comment.fromJson(comment)).toList();
-    } else {
-      throw Exception('failed to load comment');
-    }
   }
 }
