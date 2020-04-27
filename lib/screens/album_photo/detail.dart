@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:networkingdemo/api/api_service.dart';
-import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/photo.dart';
+import 'package:http/http.dart' as http;
 
 class AlbumPhotoDetail extends StatefulWidget {
   final int id;
@@ -63,7 +66,10 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return LoadingIndicator();
+          return SpinKitSquareCircle(
+            color: Colors.blue,
+            size: 50,
+          );
           print('Here');
         },
       ),

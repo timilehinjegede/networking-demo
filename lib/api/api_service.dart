@@ -24,7 +24,7 @@ class ApiService {
   static Future<List<Album>> fetchAlbumsWithId(int id) async {
     Map<String, String> queryParameters = {'userId': '$id'};
 
-    var uri = Uri.https(ApiUrls.baseURL, '/albums', queryParameters);
+    var uri = Uri.https('jsonplaceholder.typicode.com', '/albums', queryParameters);
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -60,7 +60,7 @@ class ApiService {
   static Future<List<Comment>> fetchCommentsWithId(int id) async {
     Map<String, String> queryParameters = {'postId': '$id'};
 
-    var uri = Uri.https(ApiUrls.baseURL, '/comments', queryParameters);
+    var uri = Uri.https('jsonplaceholder.typicode.com', 'comments', queryParameters);
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -76,7 +76,8 @@ class ApiService {
       'albumId': '$id',
     };
 
-    var uri = Uri.https(ApiUrls.baseURL, '/photos', queryParameters);
+    var uri =
+    Uri.https('jsonplaceholder.typicode.com', '/photos', queryParameters);
 
     final response = await http.get(uri);
 
@@ -91,7 +92,7 @@ class ApiService {
   static Future<List<Todo>> fetchTodos(int id) async {
     Map<String, String> queryParameters = {'userId': '$id'};
 
-    var uri = Uri.https(ApiUrls.baseURL, '/todos', queryParameters);
+    var uri = Uri.https('jsonplaceholder.typicode.com', '/todos', queryParameters);
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {
