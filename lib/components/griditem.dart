@@ -5,7 +5,7 @@ class GridItem extends StatelessWidget {
   final String name0;
   final String name1;
 
-  final TextStyle myStyle = TextStyle(fontSize: 15, fontWeight: FontWeight.w600);
+  final TextStyle myStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white,);
 
   GridItem({this.name0, this.name1,});
 
@@ -14,7 +14,7 @@ class GridItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Colors.blue[500],
+        color: Colors.blue,
       ),
       height: 200,
       child: Column(
@@ -27,6 +27,7 @@ class GridItem extends StatelessWidget {
           ),
           Text(
             '&',
+            style: TextStyle(color: Colors.white,),
           ),
           Text(
             name1,
