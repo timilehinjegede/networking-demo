@@ -15,7 +15,6 @@ class _APScreenState extends State<APScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureAlbum = ApiService.fetchAlbums();
   }
@@ -80,7 +79,6 @@ class _APScreenState extends State<APScreen> {
               return Text("${snapshot.error}");
             }
             return LoadingIndicator();
-            print('Here');
           },
         ),
       ),

@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:networkingdemo/api/api_service.dart';
+import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/photo.dart';
-import 'package:http/http.dart' as http;
 
 class AlbumPhotoDetail extends StatefulWidget {
   final int id;
@@ -19,7 +16,6 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futurePhoto = ApiService.fetchPhotosWithId(widget.id);
   }
@@ -39,38 +35,50 @@ class _AlbumPhotoDetailState extends State<AlbumPhotoDetail> {
               padding: EdgeInsets.zero,
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Image.network(
-                        snapshot.data[index].url,
-                        height: 80,
-                        width: 80,
-                        fit: BoxFit.cover,
+                return Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              snapshot.data[index].url,
+                              height: 80,
+                              width: 80,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            child: Text(
+                              snapshot.data[index].title,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0,
                       ),
-                      Flexible(
-                        child: Text(
-                          snapshot.data[index].title,
-                        ),
+                      child: Divider(
+                        color: Colors.grey,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               },
             );
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return SpinKitSquareCircle(
-            color: Colors.blue,
-            size: 50,
-          );
-          print('Here');
+          return LoadingIndicator();
         },
       ),
     );
