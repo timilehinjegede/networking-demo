@@ -29,7 +29,7 @@ It makes requests to the JsonPlaceholder online APIs.
 
 |  User and Todo Screen                       | Todos of each user Screen                 |
 | ------------------------------------------- | ----------------------------------------- |
-| <img src="screenshots/3.png" width="400"> | <img src="screenshots/4.png" width="400"> |
+| <img src="screenshots/user_todo.png" width="400"> | <img src="screenshots/user_todo_detail.png" width="400"> |
 
 
 ## Getting Started
