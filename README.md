@@ -7,28 +7,30 @@ It makes requests to the JsonPlaceholder online APIs.
 
 ### The screenshots below are taken on a iOS simulator.
 
-| Form with empty fields                                           | Clicking the login button with empty fields                                         |
+| Home Screen                                 | Loading Indicator                         |
 | ------------------------------------------- | ----------------------------------------- |
-| <img src="screenshots/1.png" width="400"> | <img src="screenshots/2.png" width="400"> |
+| <img src="screenshots/home.png" width="400"> | <img src="screenshots/loading_indicator.png" width="400"> |
 
 
-|  Filling part of the form fields                                           | Filling part of the form fields                                         |
+|  Album and Photo Screen                | Photos of each album Screen                    |
+| ------------------------------------------- | ----------------------------------------- |
+| <img src="screenshots/album_photo.png" width="400"> | <img src="screenshots/album_photo_detail.png" width="400"> |
+
+
+| Post and Comment Screen                | Comments of each posts Screen                  |
+| ------------------------------------------- | ----------------------------------------- |
+| <img src="screenshots/post_comment.png" width="400"> | <img src="screenshots/post_comment_detail.png" width="400"> |
+
+
+|  User and Album Screen                      | Albums of each user Screen                |
+| ------------------------------------------- | ----------------------------------------- |
+| <img src="screenshots/user_album.png" width="400"> | <img src="screenshots/user_album_detail.png" width="400"> |
+
+
+|  User and Todo Screen                       | Todos of each user Screen                 |
 | ------------------------------------------- | ----------------------------------------- |
 | <img src="screenshots/3.png" width="400"> | <img src="screenshots/4.png" width="400"> |
 
-| Form with empty fields                                           | Clicking the login button with empty fields                                         |
-| ------------------------------------------- | ----------------------------------------- |
-| <img src="screenshots/1.png" width="400"> | <img src="screenshots/2.png" width="400"> |
-
-
-|  Filling part of the form fields                                           | Filling part of the form fields                                         |
-| ------------------------------------------- | ----------------------------------------- |
-| <img src="screenshots/3.png" width="400"> | <img src="screenshots/4.png" width="400"> |
-
-
-| Validation successful                                 |
-| ------------------------------------------- | 
-| <img src="screenshots/5.png" width="400"> | 
 
 ## Getting Started
 
