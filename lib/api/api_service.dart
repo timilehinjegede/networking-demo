@@ -17,7 +17,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((album) => Album.fromJson(album)).toList();
     } else {
-      throw Exception('failed to load album');
+      throw Exception('failed to load albums');
     }
   }
 
@@ -31,7 +31,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((album) => Album.fromJson(album)).toList();
     } else {
-      throw Exception('failed to load album');
+      throw Exception('failed to load albums');
     }
   }
 
@@ -42,7 +42,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((user) => User.fromJson(user)).toList();
     } else {
-      throw Exception('failed to load album');
+      throw Exception('failed to load users');
     }
   }
 
@@ -53,7 +53,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((post) => Post.fromJson(post)).toList();
     } else {
-      throw Exception('failed to load album');
+      throw Exception('failed to load posts');
     }
   }
 
@@ -67,7 +67,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((comment) => Comment.fromJson(comment)).toList();
     } else {
-      throw Exception('failed to load comment');
+      throw Exception('failed to load comments');
     }
   }
 
@@ -85,7 +85,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((photo) => Photo.fromJson(photo)).toList();
     } else {
-      throw Exception('failed to load photo');
+      throw Exception('failed to load photos');
     }
   }
 
@@ -99,7 +99,7 @@ class ApiService {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((todo) => Todo.fromJson(todo)).toList();
     } else {
-      throw Exception('failed to load todo');
+      throw Exception('failed to load todos');
     }
   }
 }
