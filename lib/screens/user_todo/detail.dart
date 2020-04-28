@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:networkingdemo/api/api_service.dart';
 import 'package:networkingdemo/components/loading_indicator.dart';
 import 'package:networkingdemo/models/todo.dart';
