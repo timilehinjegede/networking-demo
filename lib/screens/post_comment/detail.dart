@@ -19,7 +19,6 @@ class _PostCommentDetailState extends State<PostCommentDetail> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureComment = ApiService.fetchCommentsWithId(widget.id);
   }
@@ -40,26 +39,39 @@ class _PostCommentDetailState extends State<PostCommentDetail> {
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index){
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'name: ${snapshot.data[index].name}'
-                      ),
-                      Text(
-                          'email: ${snapshot.data[index].email}'
-                      ),
-                      Text(
-                          'body: ${snapshot.data[index].body}'
-                      ),
-                      Divider(),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Name: ${snapshot.data[index].name}',
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500,),
+                        ),
+                        SizedBox(height: 2,),
+                        Text(
+                            'Email: ${snapshot.data[index].email}',
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400,),
+                        ),
+                        SizedBox(height: 8,),
+                        Text(
+                            'Body: ${snapshot.data[index].body}',
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600,color: Colors.grey,),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10,),
+                          child: Divider(color: Colors.grey,),
+                        ),
+                      ],
+                    ),
                   );
               },
             );
           } else if (snapshot.hasError) {
-            Text(
-              '${snapshot.error}'
+            Center(
+              child: Text(
+                '${snapshot.error}'
+              ),
             );
           }
           return LoadingIndicator();
