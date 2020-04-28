@@ -14,7 +14,6 @@ class _PCScreenState extends State<PCScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futurePosts = ApiService.fetchPosts();
   }
@@ -22,33 +21,71 @@ class _PCScreenState extends State<PCScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text(
-              'Posts',
-            ),
-            centerTitle: false),
-        body: FutureBuilder<List<Post>>(
-            future: futurePosts,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PostCommentDetail(snapshot.data[index].id)));
+      appBar: AppBar(
+          title: Text(
+            'Posts',
+          ),
+          centerTitle: false),
+      body: FutureBuilder<List<Post>>(
+        future: futurePosts,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                PostCommentDetail(
+                              snapshot.data[index].id,
+                            ),
+                          ),
+                        );
                       },
-                      child: ListTile(
-                        title: Text('${snapshot.data[index].title}'),
-                        subtitle: Text('${snapshot.data[index].body}'),
+                      title: Text(
+                        'Title: ${snapshot.data[index].title}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    );
-                  },
-                  itemCount: snapshot.data.length,
+                      subtitle: Text(
+                        'Body: ${snapshot.data[index].body}',
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      child: Divider(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 );
-              } else if (snapshot.hasError) {
-                Text('${snapshot.error}');
-              }
-              return LoadingIndicator();
-            }));
+              },
+              itemCount: snapshot.data.length,
+            );
+          } else if (snapshot.hasError) {
+            Center(
+              child: Text(
+                '${snapshot.error}',
+              ),
+            );
+          }
+          return LoadingIndicator();
+        },
+      ),
+    );
   }
 }
