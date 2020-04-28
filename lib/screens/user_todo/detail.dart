@@ -15,10 +15,8 @@ class UserTodoDetail extends StatefulWidget {
 class _UserTodoDetailState extends State<UserTodoDetail> {
   Future<List<Todo>> futureTodos;
 
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureTodos = ApiService.fetchTodos(widget.id);
   }
@@ -36,10 +34,24 @@ class _UserTodoDetailState extends State<UserTodoDetail> {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(snapshot.data[index].title),
-                    subtitle:
-                        Text('Completed: ${snapshot.data[index].completed}'),
+                  return Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('Text: ${snapshot.data[index].title}'),
+                        subtitle: Text(
+                          'Completed: ${snapshot.data[index].completed}',
+                        ),
+                        isThreeLine: false,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                        ),
+                        child: Divider(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   );
                 },
                 itemCount: snapshot.data.length,
