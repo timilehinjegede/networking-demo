@@ -25,7 +25,7 @@ class _APScreenState extends State<APScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Album',
+          'Albums',
         ),
         centerTitle: false,
       ),
@@ -37,37 +37,41 @@ class _APScreenState extends State<APScreen> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  AlbumPhotoDetail(snapshot.data[index].id)));
-                    },
-                    child: Card(
-                      elevation: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Flexible(
-                              child: Text(
-                                snapshot.data[index].title,
+                  return Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    AlbumPhotoDetail(
+                                  snapshot.data[index].id,
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
-                              ),
-                              onPressed: () {},
-                            )
-                          ],
+                            );
+                          },
+                          title: Text(
+                            snapshot.data[index].title,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward,
+                            size: 20,
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          child: Divider(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },

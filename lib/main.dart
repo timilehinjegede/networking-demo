@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:networkingdemo/screens/album_photo/a_p.dart';
+import 'package:networkingdemo/screens/album_photo/album_photo.dart';
 import 'package:networkingdemo/screens/home.dart';
 import 'package:networkingdemo/screens/post_comment/p_c.dart';
 import 'package:networkingdemo/screens/user_album/u_a.dart';
