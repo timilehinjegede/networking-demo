@@ -13,12 +13,10 @@ class UserAlbumDetail extends StatefulWidget {
 }
 
 class _UserAlbumDetailState extends State<UserAlbumDetail> {
-
   Future<List<Album>> futureAlbum;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     futureAlbum = ApiService.fetchAlbumsWithId(widget.id);
   }
@@ -37,18 +35,31 @@ class _UserAlbumDetailState extends State<UserAlbumDetail> {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(snapshot.data[index].title),
-                    ),
+                  return Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(snapshot.data[index].title,
+                            style: TextStyle(
+                              fontSize: 15,
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                        ),
+                        child: Divider(color: Colors.grey),
+                      ),
+                    ],
                   );
                 },
                 itemCount: snapshot.data.length,
               );
             } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+              return Center(
+                child: Text(
+                  '${snapshot.error}',
+                ),
+              );
             }
             return LoadingIndicator();
           },
